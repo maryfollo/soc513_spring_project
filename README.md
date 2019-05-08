@@ -1,9 +1,14 @@
 # Research Project Template
 
-Aaron Gullickson
+Mary Follo
 
-This is my starting template for a research project, designed for [plain text science](https://kieranhealy.org/publications/plain-person-text/). This template assumes the analysis is primarily powered by [R](https://www.r-project.org/) and [R Markdown](http://rmarkdown.rstudio.com/), but is flexible enough to incorporate other programs. The structure and organization is heavily influenced by the ideas from [Code and Data for the Social Sciences: A Practitioner's Guide](https://web.stanford.edu/~gentzkow/research/CodeAndData.xhtml) by Matthew Gentzkow and Jesse M. Shapiro. Each directory in this repository contains a README detailing organizational principles. It is assumed that these READMEs will be overwritten with project specific information when this template is used as a starter for a project. 
+This is my starting template for a research project. The data is from the ANES directory, specifically 2012 and 2016 Time Series Study Data. (https://electionstudies.org/project/2016-time-series-study/)
+(https://electionstudies.org/project/2012-time-series-study/)
+
+The 2012 Time Series study data was collected between September 2012 and January 2013, with respondents being interviewed two months prior to the 2012 election as well as the day after the election. A voter validation data set was added and will be merged with the Time Series data to to validate self-reported voter turnout and registration from the Time Series data. This data includes content on electoral participation, voting behavior and public opinion. 
+The 2016 Time Series study is similar to the 2012 but has additional features including supplemental data pulled from respondents Facebook accounts. Additionally, the Methodology file includes data on households, interviews and records of contact among respondents. The Address data gives voter turnout status for adults at each address that was sampled in the Time Series study. These data sets will be merged with the Time Series data. 
+
 
 At the top level, I divide my project into an `analysis` directory which contains all of the raw input data, constructed data, and scripts to perform the analysis and a `products` directory which contains all the R Markdown or LaTeX files and associated resources necessary to produce papers and presentations. I separate these two aspects of the research project because it is assumed that the paper will only contain a subset of the full analysis and I may spend more time at this stage to clean up and prettify tables and figures than for the actual analysis. 
 
-To start a new project from this template, copy and paste contents to a new directory, or clone, and remove the .git directory.
+

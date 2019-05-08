@@ -14,9 +14,9 @@ pagenumber: 1
 bibliography: ../project.bib
 biblio-style: ./resources/ajs.bst
 title: "The Title"
-author:
+author:    
 - affiliation: University of Oregon, Sociology
-  name: Aaron Gullickson
+  name: Mary Follo 
 - affiliation: Some Research University
   name: My co-author
 keywords: keywords
@@ -26,12 +26,19 @@ abstract: This is a test abstract
 
 # Introduction
 
-# Background
+  If you were to Google the words “Taylor Swift” and “Political” you would find an influx of articles from the most well respected and reliable new sources across the globe reporting about how one celebrity made an incredible difference in the 2018 Congressional election. However, Swift’s endorsement fell short and her candidate lost the election despite the attention the media paid to her public support. In fact, many of the politicians that celebrities supported in this most recent election cycle did not actually get elected. Why then, do celebrities publicly endorse elected officials when the intended impact is far from guaranteed? When one looks closer, one begins to question the real impact that celebrities have on voting behavior. Warren G. Harding is often credited as the first American president to utilize a celebrity endorsement in the 1920 election (Garthwaite, 2013), thus beginning a consistent trend in politics to pursue endorsements outside of traditional means of support (other politicians, unions, etc). The most salient example of modern celebrity endorsement can be seen in the 2008 presidential election primary, in which Oprah Winfrey’s endorsement of Barrack Obama can be correlated with his Democratic party nomination and eventual win (Garthwaite, 2013). The “Oprah Effect” or ability for democracy to be strengthened among low-awareness voters through the consumption of soft news media (Baum, 2006) was taken a step further after the 2008 election and shown that Oprah’s preferences explicated in her soft news media was responsible for increased campaign donations and an eventual 1 million extra votes from her fans. 
+  
+  At the time of 2008 election, social media was relatively new, Facebook and Twitter were accessible globally to Internet users in 2006 and Instagram would not be created for another two years. Today, Instagram users make up 1 billion people, worldwide, with celebrities boasting tens of millions of followers. Currently there is very little research on the effects of modern social media apps on voting behavior. However if we follow news sites, one could reasonably assume that social media, specifically the social media behavior of celebrities makes a huge impact.  For example, when Googling “Taylor Swift Political”, nearly 43 million results are available; the first dozen pages are stories from actual news sites arguing that Taylor Swift did or did not have an impact. I argue however that social media is part of a larger social schema in which many characteristics affect behavior. Further, I believe that voters rely on interpersonal relations and social connections that eventually influence voting behavior. While research does indicate that attitudes can be shaped by media influence, attitudes and actual behavior are very different. 
+Within the scope of this paper, I believe that social media can have an effect on voter registration through extensive celebrity mobilization and endorsement, however this does not translate to an effect on the behavior value laden actions like voting. This paper will explore the debates of media effect and endorsement in political voting behavior through the lens of the 2018 Congressional election. 
 
 # Data and Methods
-
+The data used in this project was collected from the American National Election Survey (ANES) website and will include both 2012 and 2016 Time Series Study data. The data was collected respectively two months before the election for pre-test data and immediately after the election and until January of the following year for post-test data. For the 2016 Time Series, 1180 face to face interviews (FTF) were conducted pre-test and 1,058 FTF post-test interviews were conducted. Additionally, 3,090 internet surveys were conducted pre-test and 2,590 internet post-test surveys were conducted. For the 2012 Time Series, 2,054 FTF interviews were conducted and 3,860 internet surveys were administered. There is no information on pre-test and post-test numbers and attrition for the 2012 data set. 
+The sample for both studies was a cross section of all elligible U.S. voters and as a result can be generalized to the voting population. The 2016 design included a dual-mode two-wave panel design using address based sampling (ABS) and in the FTF interviews, the study used a stratified, clustered ABS design with 60 primary sampling areas in the 48 contiguous states and DC, with in-person recruitment and interviews. In the Internet mode, ABS from the 50 states and DC preceded recruitment by mail and questionnaires administered on the Internet. Methodolgy was not given for the 2012 study but can be assumed to be the same as the 2016 study. 
 # Results
 
 # Conclusions
 
 # References
+Baum, M. A., & Jamison, A. S. (2006). The Oprah effect: How soft news helps inattentive citizens vote consistently. The Journal of Politics, 68(4), 946-959.
+
+Garthwaite, C., & Moore, T. J. (2012). Can celebrity endorsements affect political outcomes? Evidence from the 2008 US democratic presidential primary. The journal of law, economics, & organization, 29(2), 355-384.
