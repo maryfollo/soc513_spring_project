@@ -106,9 +106,9 @@ anes2016$socialmedia<-ifelse(anes2016$V161495==0, "None",
                                                                        ifelse(anes2016$V161495==7, "Seven days", NA))))))))
 table(anes2016$socialmedia)
 
-anes2016$Prescamp_throughtv<-ifelse(anes2016$V161363a==0, "Not selected", 
+anes2016$Prescamp_thoughtv<-ifelse(anes2016$V161363a==0, "Not selected", 
                                     ifelse(anes2016$V161363a==1, "Selected", NA))
-
+table(anes2016$Prescamp_thoughtv)
 anes2012$age<-ifelse(anes2012$dem_agegrp_iwdate_x==1, "Age group 17-20",
                      ifelse(anes2012$dem_agegrp_iwdate_x==2, "Age group 21-24", 
                             ifelse(anes2012$dem_agegrp_iwdate_x==3, "Age group 25-29", 
@@ -150,3 +150,8 @@ anes2012$media_intINT<-ifelse(anes2012$prmedia_atinews==1, "A great deal",
                                      ifelse(anes2012$prmedia_atinews==3, "A moderate amount", 
                                             ifelse(anes2012$prmedia_atinews==4, "A little", 
                                                    ifelse(anes2012$prmedia_atinews==5, "None at all", NA)))))
+
+cleaned_data<-subset(anes2016,
+                     select=c("vote", "media_att", "gender", 
+                              "partyreg", "media_pol", "state", 
+                              "age", "socialmedia", "Prescamp_thoughtv"))
