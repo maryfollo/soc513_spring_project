@@ -9,11 +9,190 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message= FALSE, fig.align = "center")
 source("useful_functions.R")
+load("output/analytical_data.RData")
+library(ggplot2)
+library(haven)
+library(readr)
+library(texreg)
+library(nnet)
 ```
+
+#Univariate distributions
+```{r age, fig.cap="Age Proportion"}
+ggplot(cleaned_data2016, aes(x=age, y=..prop.., group=1))+
+  geom_bar()+
+  theme_bw()
+```
+
+#Bivariate plots
+```{r vote_age_2016, echo=FALSE, fig.cap="Proportion of voting by age", fig.align="center" }
+ggplot(cleaned_data2016, aes(x=vote, y=..prop.., group=1))+
+  geom_bar()+
+  facet_wrap(~age)+
+  coord_flip()+
+  labs(x="Candidate choce", y="proportion")
+  theme_bw()
+```
+
+```{r vote_age_2012, echo-FALSE, fig.cap="Proportion of voting by age",fig.align="center"}  
+  ggplot(cleaned_data2012, aes(x=vote, y=..prop.., group=1))+
+  geom_bar()+
+  facet_wrap(~age)+
+  coord_flip()+
+  labs(x="Candidate choce", y="proportion")
+  theme_bw()
+```
+
+Starting at 18 through around the 50 and up age group, Clinton wins more votes, that changes around 50 with the highest proportion of Trump voters being in the 70-75 age range. 
+Need to collapse age ranges.
+
+```{r media_age_2016}
+cleaned_data2016$media_att_score<- as.numeric(cleaned_data2016$media_att)
+model<-lm(media_att, data=cleaned_data2016)
+
+ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
+  geom_bar()+
+  facet_wrap(~age)+
+  coord_flip()+
+  labs(x="Media attention", y="proportion")+
+  theme_bw()
+```
+  
+```{r media_age_2012}
+ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
+  geom_bar()+
+  facet_wrap(~age)+
+  coord_flip()+
+  labs(x="Media attention Internet", y="proportion")+
+  theme_bw()
+```
+
+
+```{r media_party_2012}
+ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
+  geom_bar()+
+  facet_wrap(~party)+
+  labs(x="Media attention Internet", y="proportion")+
+  coord_flip()+
+  theme_bw()
+```
+
+```{r media_party_2016}
+ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
+  geom_bar()+
+  facet_wrap(~partyreg)+
+  coord_flip()+
+  labs(x="Media attention by party", y="Proportion")+
+  theme_bw()
+```
+
+
+```{r media_vote_2012}
+ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
+  geom_bar()+
+  facet_wrap(~vote)+
+  coord_flip()+
+  labs(x="Media attention Internet", y="proportion")+
+  theme_bw()
+```
+
+```{r media_vote_2016}
+ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
+  geom_bar()+
+  facet_wrap(~vote)+
+  coord_flip()+
+  labs(x="Media attention by vote", y="proportion")+
+  theme_bw()
+```
+
+```{r social_party_2016}
+ggplot(cleaned_data2016, aes(x=socialmedia, y=..prop.., group=1))+
+  geom_bar()+
+  facet_wrap(~vote)+
+  coord_flip()+
+  labs(x="Social media usage", y="proportion")+
+  theme_bw()
+```
+
+```{r socialmedia_party}
+ggplot(cleaned_data2016, aes(x=socialmedia, y=..prop.., group=1))+
+  geom_bar()+
+  facet_wrap(~partyreg)+
+  labs(x="Social media usage by party", y="proportion")+
+  theme_bw()
+
+```
+
+```{r model}
+#create continuous age variable
+
+model.full<-multinom(vote~media_att+I(agequant-40)+I((agequant-40)^2)+gender, data=cleaned_data2016)
+round(coef(model.full),5)
+
+age <- 18:80
+fakedata <- data.frame(media_att=rep(c("None at all","A little","A moderate amount","A lot","A great deal"), length(age)),
+                       agequant=rep(age,each=5), gender=rep("Female",5*length(age)))
+predicted.probs <- predict(model.full, fakedata, type="probs")
+
+fake.results <- cbind(rbind(fakedata, fakedata, fakedata, fakedata),
+                      as.data.frame.table(predicted.probs))
+colnames(fake.results) <- c("media_att","age","gender","id","candidate","proportion")
+
+ggplot(fake.results, aes(x=age, y=proportion, color=candidate, group=candidate))+
+  geom_line()+
+  facet_wrap(~media_att)+
+  theme_bw()
+
+ggplot(fake.results, aes(x=age, y=proportion, color=media_att, group=media_att))+
+  geom_line()+
+  facet_wrap(~candidate)+
+  theme_bw()
+
+
+rm(model.full)
+```
+```{r model_2012}
+
+#Still giving me 2016 results for some reason 
+modelx.full_2012<-multinom(vote~media_intINT+I(agequant-40)+I((agequant-40)^2)+gender, data=cleaned_data2012)
+round(coef(modelx.full_2012),5)
+
+age <- 18:80
+fakedata_12 <- data.frame(media_intINT=rep(c("None at all","A little","A moderate amount","A lot","A great deal"), length(age)),
+                       agequant=rep(age,each=5), gender=rep("Female",5*length(age)))
+predicted.probs_12 <- predict(modelx.full_2012, fakedata_12, type="probs")
+
+fake.results_12 <- cbind(rbind(fakedata_12, fakedata_12, fakedata_12, fakedata_12),
+                      as.data.frame.table(predicted.probs_12))
+colnames(fake.results_12) <- c("media_intINT","age","gender","id","candidate","proportion")
+
+
+ggplot(fake.results_12, aes(x=age, y=proportion, color=candidate, group=candidate))+
+  geom_line()+
+  facet_wrap(~media_intINT)+
+  theme_bw()
+
+ggplot(fake.results_12, aes(x=age, y=proportion, color=media_intINT, group=media_intINT))+
+  geom_line()+
+  facet_wrap(~candidate)+
+  theme_bw()
+
+
+```
+
+```{r model_attempt}
+
+model.full<-multinom(media_att~partyreg+vote+age, data=cleaned_data2016)
+coef(model.full)
+
+model<-lm(media_att~partyreg+vote+age, data=cleaned_data2016)
+
+```
+
 
 # Introduction
 <a href="#top">Back to top</a>
-
+#takes you back to the top
 Use this R Markdown to perform the main analysis for the project. I use this basically as a lab notebook. It contains the main analysis and a variety of sensitivity analysis. The code in this documents serves as a baseline for the eventual tables and figures that will go into the paper. At the same time it will serve as a record of all supplementary analyses performed. 
