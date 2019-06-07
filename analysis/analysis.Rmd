@@ -189,10 +189,15 @@ coef(model.full)
 
 model<-lm(media_att~partyreg+vote+age, data=cleaned_data2016)
 
+#Still not sure if I can get these models to work or if they're telling me anything useful for my project 
+
 ```
 
 
 # Introduction
+
+Need to reformulate introduction based on changing research question. 
+Premlinary analysis shows that media attention for Trump voters increase over age while Clinton voters show pretty stagnant results over time. This is without an interaction variable. Does this mean that Trump mobilizes an older population so they use media more for politics than Clinton voters? Also young people who don't pay attention to the media are more likely to vote Trump? This sort of negates all the theories on internet collusion into the campaign, but maybe young people who aren't engaged in media sources come from regions and areas that could be low income and don't have access or don't care about mainstream media and as a result vote for Trump? Or does this show that people who don't pay attention just in general have higher rates of voting for Trump? There is a similar effect for the 2012 election where young people paid less attention to the media than older people for those who voted for Romney. Similarly, media attention makes an inverted "u" shape for Obama voters with older voters paying less attention. Does this show that republicans work on mobilizing older populations more and succeed, alienating their young voters? Maybe? 
 <a href="#top">Back to top</a>
 #takes you back to the top
 Use this R Markdown to perform the main analysis for the project. I use this basically as a lab notebook. It contains the main analysis and a variety of sensitivity analysis. The code in this documents serves as a baseline for the eventual tables and figures that will go into the paper. At the same time it will serve as a record of all supplementary analyses performed. 
