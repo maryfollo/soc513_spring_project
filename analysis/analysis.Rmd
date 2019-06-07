@@ -43,14 +43,15 @@ ggplot(cleaned_data2016, aes(x=vote, y=..prop.., group=1))+
   coord_flip()+
   labs(x="Candidate choce", y="proportion")
   theme_bw()
+  
+  #not working?
 ```
 
 Starting at 18 through around the 50 and up age group, Clinton wins more votes, that changes around 50 with the highest proportion of Trump voters being in the 70-75 age range. 
 Need to collapse age ranges.
 
-```{r media_age_2016}
-cleaned_data2016$media_att_score<- as.numeric(cleaned_data2016$media_att)
-model<-lm(media_att, data=cleaned_data2016)
+```{r media_age_2016, echo=FALSE, fig.cap= "Media attention by age- 2016 election", fig.align="center"}
+
 
 ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
   geom_bar()+
@@ -60,7 +61,7 @@ ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
   theme_bw()
 ```
   
-```{r media_age_2012}
+```{r media_age_2012, echo=FALSE}
 ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~age)+
@@ -70,7 +71,7 @@ ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
 ```
 
 
-```{r media_party_2012}
+```{r media_party_2012, echo=FALSE}
 ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~party)+
@@ -79,7 +80,7 @@ ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
   theme_bw()
 ```
 
-```{r media_party_2016}
+```{r media_party_2016, echo=FALSE}
 ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~partyreg)+
@@ -89,7 +90,7 @@ ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
 ```
 
 
-```{r media_vote_2012}
+```{r media_vote_2012, echo=FALSE}
 ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~vote)+
@@ -98,7 +99,7 @@ ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
   theme_bw()
 ```
 
-```{r media_vote_2016}
+```{r media_vote_2016, echo=FALSE}
 ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~vote)+
@@ -107,7 +108,7 @@ ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
   theme_bw()
 ```
 
-```{r social_party_2016}
+```{r social_party_2016, echo=FALSE}
 ggplot(cleaned_data2016, aes(x=socialmedia, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~vote)+
@@ -116,7 +117,7 @@ ggplot(cleaned_data2016, aes(x=socialmedia, y=..prop.., group=1))+
   theme_bw()
 ```
 
-```{r socialmedia_party}
+```{r socialmedia_party, echo=FALSE}
 ggplot(cleaned_data2016, aes(x=socialmedia, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~partyreg)+
@@ -125,7 +126,7 @@ ggplot(cleaned_data2016, aes(x=socialmedia, y=..prop.., group=1))+
 
 ```
 
-```{r model}
+```{r model, echo=FALSE}
 #create continuous age variable
 
 model.full<-multinom(vote~media_att+I(agequant-40)+I((agequant-40)^2)+gender, data=cleaned_data2016)
@@ -153,7 +154,7 @@ ggplot(fake.results, aes(x=age, y=proportion, color=media_att, group=media_att))
 
 rm(model.full)
 ```
-```{r model_2012}
+```{r model_2012, echo=FALSE}
 
 #Still giving me 2016 results for some reason 
 modelx.full_2012<-multinom(vote~media_intINT+I(agequant-40)+I((agequant-40)^2)+gender, data=cleaned_data2012)
@@ -182,7 +183,7 @@ ggplot(fake.results_12, aes(x=age, y=proportion, color=media_intINT, group=media
 
 ```
 
-```{r model_attempt}
+```{r model_attempt, echo=FALSE}
 
 model.full<-multinom(media_att~partyreg+vote+age, data=cleaned_data2016)
 coef(model.full)
