@@ -32,8 +32,9 @@ ggplot(cleaned_data2016, aes(x=vote, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~age)+
   coord_flip()+
-  labs(x="Candidate choce", y="proportion")
+  labs(x="Candidate choce", y="proportion")+
   theme_bw()
+#More media attention padi by older people who also overwhelmingly vote for trump
 ```
 
 ```{r vote_age_2012, echo-FALSE, fig.cap="Proportion of voting by age",fig.align="center"}  
@@ -41,7 +42,7 @@ ggplot(cleaned_data2016, aes(x=vote, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~age)+
   coord_flip()+
-  labs(x="Candidate choce", y="proportion")
+  labs(x="Candidate choce", y="proportion")+
   theme_bw()
   
   #not working?
@@ -129,12 +130,13 @@ ggplot(cleaned_data2016, aes(x=socialmedia, y=..prop.., group=1))+
 ```{r model, echo=FALSE}
 #create continuous age variable
 
-model.full<-multinom(vote~media_att+I(agequant-40)+I((agequant-40)^2)+gender, data=cleaned_data2016)
+model.full<-multinom(vote~media_att*(I(age-40))+gender, data=cleaned_data2016)
 round(coef(model.full),5)
 
 age <- 18:80
-fakedata <- data.frame(media_att=rep(c("None at all","A little","A moderate amount","A lot","A great deal"), length(age)),
-                       agequant=rep(age,each=5), gender=rep("Female",5*length(age)))
+fakedata <- data.frame(media_att=factor(rep(c("A little/None","A moderate amount","A lot","A great deal"), length(age)),
+                                        levels=c("A little/None","A moderate amount","A lot","A great deal")),
+                       age=rep(age,each=4), gender=rep("Female",4*length(age)))
 predicted.probs <- predict(model.full, fakedata, type="probs")
 
 fake.results <- cbind(rbind(fakedata, fakedata, fakedata, fakedata),
@@ -143,26 +145,26 @@ colnames(fake.results) <- c("media_att","age","gender","id","candidate","proport
 
 ggplot(fake.results, aes(x=age, y=proportion, color=candidate, group=candidate))+
   geom_line()+
-  facet_wrap(~media_att)+
+  facet_wrap(~media_att, scales = "free_y")+
   theme_bw()
 
 ggplot(fake.results, aes(x=age, y=proportion, color=media_att, group=media_att))+
   geom_line()+
-  facet_wrap(~candidate)+
+  facet_wrap(~candidate, scales = "free_y")+
   theme_bw()
 
 
-rm(model.full)
+#rm(model.full)
 ```
 ```{r model_2012, echo=FALSE}
 
-#Still giving me 2016 results for some reason 
-modelx.full_2012<-multinom(vote~media_intINT+I(agequant-40)+I((agequant-40)^2)+gender, data=cleaned_data2012)
+#
+modelx.full_2012<-multinom(vote~media_intINT*I(age-40)+gender, data=cleaned_data2012)
 round(coef(modelx.full_2012),5)
 
 age <- 18:80
-fakedata_12 <- data.frame(media_intINT=rep(c("None at all","A little","A moderate amount","A lot","A great deal"), length(age)),
-                       agequant=rep(age,each=5), gender=rep("Female",5*length(age)))
+fakedata_12 <- data.frame(media_intINT=rep(c("A little/None","A moderate amount","A lot","A great deal"), length(age)),
+                       age=rep(age,each=4), gender=rep("Female",4*length(age)))
 predicted.probs_12 <- predict(modelx.full_2012, fakedata_12, type="probs")
 
 fake.results_12 <- cbind(rbind(fakedata_12, fakedata_12, fakedata_12, fakedata_12),
@@ -177,7 +179,7 @@ ggplot(fake.results_12, aes(x=age, y=proportion, color=candidate, group=candidat
 
 ggplot(fake.results_12, aes(x=age, y=proportion, color=media_intINT, group=media_intINT))+
   geom_line()+
-  facet_wrap(~candidate)+
+  facet_wrap(~candidate, scales= "free y")+
   theme_bw()
 
 
