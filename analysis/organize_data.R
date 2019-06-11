@@ -128,14 +128,15 @@ anes2016$age<-ifelse(anes2016$V161267x==1, 19,
                                                                                            ifelse(anes2016$V161267x==12, 72, 
                                                                                                   ifelse(anes2016$V161267x==13, 80, NA)))))))))))))
 
-anes2016$socialmedia<-ifelse(anes2016$V161495==0, "None", 
+anes2016$socialmedia<-factor(ifelse(anes2016$V161495==0, "None", 
                              ifelse(anes2016$V161495==1, "One day", 
                                     ifelse(anes2016$V161495==2, "Two days", 
                                            ifelse(anes2016$V161495==3, "Three days", 
                                                   ifelse(anes2016$V161495==4, "Four days", 
                                                          ifelse(anes2016$V161495==5,"Five days", 
                                                                 ifelse(anes2016$V161495==6, "Six days", 
-                                                                       ifelse(anes2016$V161495==7, "Seven days", NA))))))))
+                                                                       ifelse(anes2016$V161495==7, "Seven days", NA)))))))),
+                             levels=c("None", "One Day", "Two Days", "Three Days", "Four Days", "Five Days", "Six Days", "Seven Days"))
 table(anes2016$socialmedia)
 
 anes2016$Prescamp_thoughtv<-ifelse(anes2016$V161363a==0, "Not selected", 
