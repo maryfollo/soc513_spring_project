@@ -27,7 +27,7 @@ ggplot(cleaned_data2016, aes(x=age, y=..prop.., group=1))+
 ```
 
 #Bivariate plots
-```{r vote_age_2016, echo=FALSE, fig.cap="Proportion of Candidate Choice across Age Group Means", fig.align="center" }
+```{r vote_age_2016, echo=FALSE, fig.cap="Graph 1: Proportion of Candidate Choice across Age Group Means", fig.align="center" }
 ggplot(cleaned_data2016, aes(x=vote, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~age)+
@@ -37,7 +37,7 @@ ggplot(cleaned_data2016, aes(x=vote, y=..prop.., group=1))+
 #More media attention padi by older people who also overwhelmingly vote for trump
 ```
 
-```{r vote_age_2012, echo-FALSE, fig.cap="Proportion of Candidate Choice across Age Group Means 2012",fig.align="center"}  
+```{r vote_age_2012, echo-FALSE, fig.cap="Graph 2: Proportion of Candidate Choice across Age Group Means 2012",fig.align="center"}  
   ggplot(cleaned_data2012, aes(x=vote, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~age)+
@@ -51,7 +51,7 @@ ggplot(cleaned_data2016, aes(x=vote, y=..prop.., group=1))+
 Starting at 18 through around the 50 and up age group, Clinton wins more votes, that changes around 50 with the highest proportion of Trump voters being in the 70-75 age range. 
 Need to collapse age ranges.
 
-```{r media_age_2016, echo=FALSE, fig.cap= "Proportion of Media attention across Age Group Means 2016", fig.align="center"}
+```{r media_age_2016, echo=FALSE, fig.cap= "Graph 3: Proportion of Media attention across Age Group Means 2016", fig.align="center"}
 
 ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
   geom_bar()+
@@ -61,7 +61,7 @@ ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
   theme_bw()
 ```
   
-```{r media_age_2012, echo=FALSE, fig.align = "center", fig.cap= "Proportion of Media Attention for Internet Users Across Age Group Means 2012"}
+```{r media_age_2012, echo=FALSE, fig.align = "center", fig.cap= "Graph 4: Proportion of Media Attention for Internet Users Across Age Group Means 2012"}
 ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~age)+
@@ -72,7 +72,7 @@ ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
 ```
 
 
-```{r media_party_2012, echo=FALSE, fig.align="center", fig.cap="Proportion of Media Attention by Internet Users across Parties 2012"}
+```{r media_party_2012, echo=FALSE, fig.align="center", fig.cap="Graph 5: Proportion of Media Attention by Internet Users across Parties 2012"}
 ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~party)+
@@ -81,7 +81,7 @@ ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
   theme_bw()
 ```
 
-```{r media_party_2016, echo=FALSE, fig.align="center", fig.cap= "Proportion of Media Attention across Parties 2016"}
+```{r media_party_2016, echo=FALSE, fig.align="center", fig.cap= "Graph 6: Proportion of Media Attention across Parties 2016"}
 ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~partyreg)+
@@ -127,7 +127,7 @@ ggplot(cleaned_data2016, aes(x=socialmedia, y=..prop.., group=1))+
 
 ```
 
-```{r model, echo=FALSE}
+```{r model, echo=FALSE, fig.align="center", fig.cap="Proportion of Media Attention by Candidate Choice across Age"}
 #create continuous age variable
 
 model.full<-multinom(vote~media_att*(I(age-40))+gender, data=cleaned_data2016)
@@ -159,12 +159,12 @@ ggplot(fake.results, aes(x=age, y=proportion, color=media_att, group=media_att))
        y="Proportion")
 
 
-#rm(model.full)
+
 ```
 
 
 
-```{r model_2012, echo=FALSE}
+```{r model_2012, echo=FALSE, fig.align="center", fig.cap="Proportion of Media Attention by Candidate Choice across Age"}
 
 #
 modelx.full_2012<-multinom(vote~media_intINT*I(age-40)+gender, data=cleaned_data2012)
@@ -198,7 +198,7 @@ theme(legend.position="right")+
 
 ```
 
-```{r model_attempt, echo=FALSE}
+```{r model_attempt, echo=FALSE, fig.align="center", fig.cap="Regression Model Predicting Voting by Attention Paid to the Media across Age"}
 
 model.full<-multinom(media_att~partyreg+vote+age, data=cleaned_data2016)
 coef(model.full)
@@ -213,14 +213,9 @@ custom.coef.names=c("Intercept",
                     "A great deal (age-40", 
                     "A lot (age-40)", 
                     "A moderate amount (age-40)"), 
-caption="Regression model Predicting Voting by Attention Paid to the Media and Age", 
+caption="Regression Model Predicting Voting by Attention Paid to the Media across Age", 
 caption.above=TRUE)
  
-
-
-model<-lm(media_att~partyreg+vote+age, data=cleaned_data2016)
-
-#Still not sure if I can get these models to work or if they're telling me anything useful for my project 
 
 ```
 

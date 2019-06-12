@@ -17,6 +17,8 @@ voteval2012 <- read_csv(file= "input/anes_timeseries_2012_voteval_csv.zip")
 #source in any useful functions
 source("useful_functions.R")
 
+
+
 anes2016$vote <- ifelse(anes2016$V162034==2, "No vote",
                         ifelse(anes2016$V162034a==1, "Clinton",
                                ifelse(anes2016$V162034a==2, "Trump",
