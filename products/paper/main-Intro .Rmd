@@ -74,6 +74,15 @@ library(nnet)
   labs(x="Candidate Choice", y="Proportion")+
   theme_bw()
   
+temp <- as.data.frame.table(prop.table(table(cleaned_data2012$age, cleaned_data2012$vote),1))
+colnames(temp) <- c("age","candidate","prop")
+temp$age <- as.numeric(as.character(temp$age))
+ggplot(temp, aes(x=age, y=prop*100, color=candidate, group=candidate))+
+  geom_point()+
+  #geom_smooth(se=FALSE)+
+  geom_line()+
+  labs(x="age", y="percent")+
+  theme_bw()
 ```
 
 ```{r vote_age_2016, echo=FALSE, message=FALSE, error=FALSE, fig.cap="Proportion of Candidate Choice across Age Group Means 2016"}
