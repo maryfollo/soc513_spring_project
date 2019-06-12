@@ -67,30 +67,33 @@ library(nnet)
 
 
 ```{r vote_age_2012, echo=FALSE, message=FALSE, error=FALSE, fig.cap="Proportion of Candidate Choice across Age Group Means 2012"}  
-  ggplot(cleaned_data2012, aes(x=vote, y=..prop.., group=1))+
-  geom_bar()+
-  facet_wrap(~age)+
-  coord_flip()+
-  labs(x="Candidate Choice", y="Proportion")+
-  theme_bw()
+  #ggplot(cleaned_data2012, aes(x=vote, y=..prop.., group=1))+
+  #geom_bar()+
+  #facet_wrap(~age)+
+  #coord_flip()+
+  #labs(x="Candidate Choice", y="Proportion")+
+  #theme_bw()
   
 temp <- as.data.frame.table(prop.table(table(cleaned_data2012$age, cleaned_data2012$vote),1))
 colnames(temp) <- c("age","candidate","prop")
 temp$age <- as.numeric(as.character(temp$age))
 ggplot(temp, aes(x=age, y=prop*100, color=candidate, group=candidate))+
   geom_point()+
-  #geom_smooth(se=FALSE)+
   geom_line()+
-  labs(x="age", y="percent")+
+  labs(x="age", y="percent", col="Candidate")+
   theme_bw()
 ```
 
 ```{r vote_age_2016, echo=FALSE, message=FALSE, error=FALSE, fig.cap="Proportion of Candidate Choice across Age Group Means 2016"}
-ggplot(cleaned_data2016, aes(x=vote, y=..prop.., group=1))+
-  geom_bar()+
-  facet_wrap(~age)+
-  coord_flip()+
-  labs(x="Candidate Choice", y="Proportion")+
+
+temp_2016<- as.data.frame.table(prop.table(table(cleaned_data2016$age, cleaned_data2016$vote),1))
+colnames(temp_2016)<- c("age", "candidate", "prop")
+temp_2016$age<- as.numeric(as.character(temp_2016$age))
+
+ggplot(temp_2016, aes(x=age, y=prop*100, color=candidate, group=candidate))+
+  geom_point()+
+  geom_line()+
+  labs(x="age", y="percent", col="Candidate")+
   theme_bw()
 
 ```
@@ -98,43 +101,53 @@ ggplot(cleaned_data2016, aes(x=vote, y=..prop.., group=1))+
 The first two graphs show a bivariate analysis of the proportion of candidate choice across age group means. For this analysis, each age group was subset to include a range of five years. The 2012 graph shows that for all age groups, except age 72, Obama was the overwhelming favorite. The youngest group of voters chose to vote for Obama at much higher proportions (40% compared to 10%). While the proportion of votes for Romney begins to increase when a person enters their 40’s, Obama is there clear winner in almost all age groups. The 72-year-old age group does show a slightly higher probability of voting for Romney compared to Obama, but for the 80 year old age group; there are equal proportions of votes for each candidate. In the 2016 data, proportions are closer between the two candidates with Clinton capturing around 25% of votes from the youngest age group while Trump received around 15%. The proportion of votes for Trump increases at an early age than did votes for Romney in 2012. In the age range of 47, one becomes slightly more likely to vote for Trump. While proportions fluctuate, Trump maintains the advantage for most age groups over 42. This of course is no surprise for most scholars of American voting behavior. The Republican Party overwhelmingly targets an older demographic with more conservation policies than the Democratic party. What is interesting however is that the proportion difference is much closer in 2016 than it was in 2012, this can be for a variety of reasons including incumbent advantage or the progressive pull of Obama’s neo-liberal policies on Republicans. What it does appear to confirm however is that the older one gets, the more likely one is to vote Republican. 
 
 ```{r media_age_2012, echo=FALSE, message=FALSE, error=FALSE, fig.cap= "Proportion of Media Attention for Internet Users Across Age Group Means 2012"}
-ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
-  geom_bar()+
-  facet_wrap(~age)+
-  coord_flip()+
-  labs(x="Media attention by Internet Users", 
-       y="Proportion")+
+
+temp_media<- as.data.frame.table(prop.table(table(cleaned_data2012$age, cleaned_data2012$media_intINT),1))
+colnames(temp_media)<- c("age", "media", "prop")
+temp_media$age<- as.numeric(as.character(temp_media$age))
+
+ggplot(temp_media, aes(x=age, y=prop*100, color= media, group=media))+
+  geom_point()+
+  geom_line()+
+  labs(x="age", y="percent", col="Media Attention")+
   theme_bw()
 ```
 
 ```{r media_age_2016, echo=FALSE, message=FALSE, error=FALSE, fig.cap= "Proportion of Media attention across Age Group Means 2016"}
 
-ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
-  geom_bar()+
-  facet_wrap(~age)+
-  coord_flip()+
-  labs(x="Media attention", y="Proportion")+
+temp_media16<- as.data.frame.table(prop.table(table(cleaned_data2016$age, cleaned_data2016$media_att),1))
+colnames(temp_media16)<- c("age", "media", "prop")
+temp_media16$age<- as.numeric(as.character(temp_media$age))
+
+ggplot(temp_media16, aes(x=age, y=prop*100, color= media, group=media))+
+  geom_point()+
+  geom_line()+
+  labs(x="age", y="percent", col="Media Attention")+
   theme_bw()
 ```
 
 The next set of graphs explores the relationship between age and the amount of attention one pays to politics in the media. In 2012, for voters between the ages of 19 and 35, most paid little to no attention to politics in the media. As age increases, the amount of voters paying little to no attention decreases, as do most of the categories. This makes sense, as older people are less likely to use media like the Internet to consume information about politics. Further, in 2012, media was less accessible to older populations than it is now. In 2016, proportions for media attention are much higher overall. Still, little to none, and a moderate amount are the categories that best characterize young people and politics in the media. However, starting in one’s late 30’s paying attention to politics in the media increases and the 72 year old age group reporting the highest proportion of users paying “A lot” of attention. While this is a somewhat unusual result, I believe this can be attributed to media becoming the primary way people receive news. Out are of the days of newspaper, radio and even television news, as more and more people consumer Internet news. As media has become more accessible to older generations, it should not be surprising that older people use media to become informed about politics than younger generations who are more interested in popular apps and websites. 
 
 ```{r media_party_2012, echo=FALSE, message=FALSE, error=FALSE, fig.cap="Proportion of Media Attention by Internet Users across Parties 2012"}
+
 ggplot(cleaned_data2012, aes(x=media_intINT, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~party)+
   labs(x="Media Attention for Internet Users by Party", y="Proportion")+
   coord_flip()+
   theme_bw()
+
 ```
 
 ```{r media_party_2016, echo=FALSE, message=FALSE, error= FALSE, fig.cap= "Proportion of Media Attention across Parties 2016"}
+
 ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~partyreg)+
   coord_flip()+
   labs(x="Media Attention by Party", y="Proportion")+
   theme_bw()
+
 ```
 
 My final bivariate analysis plots look at media attention by party affiliation. As shown above in Figures 1 and 2, voting Republican seems to increase over age and attention to politics using media also seems to increase by age. However, I also want to look at party affiliation and media interest. Do we see these same results by party and media attention, or are age, voting and media not as contingent on each other? Further, voting and media attention both have higher proportions in 2016 than in 2012, by exploring more variables, we can understand how much or how little of an impact the growing media has on voting. In 2012, Republicans paid greater attention to the media than did Democrats except in the categories of “A little” and “None”. This is interesting that Republicans would pay more attention gives that Obama won out in almost all ages. Furthermore, in 2016, Republicans have slightly higher rates of paying a great deal of attention, but Democrats pay more attention in the “A lot” and “A moderate amount” categories. Rates in 2016 are also much larger than rates in 2012 with each response gaining nearly 30% of responses compared to the 20% and under than answers received in 2012. What this could show is that the opposition party pays more attention to the news media than does the incumbent party. Further, in 2016, Democrats who were trying to mobilize a broad base, paid more attention than did homogenous Republicans. 
@@ -189,7 +202,7 @@ ggplot(fake.results, aes(x=age, y=proportion, color=media_att, group=media_att))
   theme_bw()+
   theme(legend.position="right")+
   labs(x="Age",
-       caption="Proportion of Media Attention by Candidate Choice across Age", 
+         caption="Proportion of Media Attention by Candidate Choice across Age",
       col="Media Attention",
        y="Proportion")
 
@@ -212,7 +225,7 @@ caption.above=TRUE)
  
 ```
 
-Finally looking only at the 2016 election, Table 1 shows a regression of media attention by party registration holding vote choice and age constant. In this table, voting for Clinton and being female is the constant. What we see is that for “A great deal” and “A lot” of media attention, as those rates go down, voting for Trump increases. Put differently, paying less attention to news media makes one more likely to vote for Trump. These two variables are statistically significant. Additionally, being male and being older makes one more likely to vote for Trump. At the bottom of Table 1, paying “A moderate amount” of media attention with the interaction of age is shown to be significant, because this result includes all of the other variables in the model, it is likely that collinearity produced this result. 
+Finally looking only at the 2016 election, Table 1 shows a regression of vote choice by media attention with an interaction term for people under 40 years of age and holding gender constant. In this table, voting for Clinton and being female is the constant. What we see is that for “A great deal” and “A lot” of media attention, as those rates go down, voting for Trump increases. Put differently, paying less attention to news media makes one more likely to vote for Trump. These two variables are statistically significant. Additionally, being male and being older makes one more likely to vote for Trump. At the bottom of Table 1, paying “A moderate amount” of media attention with the interaction of age is shown to be significant, because this result includes all of the other variables in the model, it is likely that collinearity produced this result. 
 
 # Conclusions
 
