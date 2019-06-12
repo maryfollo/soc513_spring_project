@@ -49,22 +49,24 @@ The 2016 Time Series study is similar to the 2012 but has additional features in
 
 I created a subset of the following variables in the ANES 2016 dataset: vote choice, how often they use media news to follow politics, gender, age, state, party affiliation, how many days do they use social media and how closely they follow politics in the media. I created a subset of the following variavles in the ANES 2012 dataset: vote choice, state, gender, age, how often they use TV news to follow politics, how often they use the Internet to follow politics, party affiliation and how often they are interested in politics. 
 
-After created subsets of each data set I recoded all the variables, in some cases I combined answers and omitted non-responses. Further, for my models I was able to subset the data again to include only voting ages and worked on combining rows and columns in certain variables to merge matrices. The graphs created include bivariate analysis of candidate choice across age groups as well as media attention across age groups and media attention by party affiliation. Finally, I used an interaction term to create a multinomial model to determine if voting by different levels of media attention was significant. 
+After created subsets of each data set I recoded all the variables, in some cases I combined answers and omitted non-responses including turning age into a continuous variable. For my models I was able to subset the data again to include only voting ages and worked on combining rows and columns in certain variables to merge matrices. The graphs created include bivariate analysis of candidate choice across age groups as well as media attention across age groups and media attention by party affiliation. Finally, I used an interaction term to create a multinomial model to determine if voting by different levels of media attention was significant. 
 
 # Results
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE, fig.align = "center")
-source("useful_functions.R")
-load("../../analysis/output/analytical_data.RData")
+load("~/Desktop/soc513_spring_project/analysis/output/analytical_data.RData")
+source("~/Desktop/soc513_spring_project/useful_functions.R")
 library(ggplot2)
+library(knitr)
 library(haven)
 library(readr)
 library(texreg)
 library(nnet)
+
 ```
 
-```{r vote_age_2012, echo-FALSE, fig.cap="Graph 1: Proportion of Candidate Choice across Age Group Means 2012",fig.align="center"}  
+```{r vote_age_2012, echo=FALSE, fig.cap="Graph 1: Proportion of Candidate Choice across Age Group Means 2012",fig.align="center"}  
   ggplot(cleaned_data2012, aes(x=vote, y=..prop.., group=1))+
   geom_bar()+
   facet_wrap(~age)+
@@ -200,8 +202,7 @@ model.full<-multinom(media_att~partyreg+vote+age, data=cleaned_data2016)
 coef(model.full)
 
 screenreg((model.full), 
-custom.coef.names=c("Intercept", 
-                    "A great deal",
+custom.coef.names=c("A great deal",
                     "A lot",
                     "A moderate amount", 
                     "Interaction (age-40)", 
@@ -214,11 +215,11 @@ caption.above=TRUE)
  
 
 ```
-Finally looking only at the 2016 election, Table 1 shows a regression of media attention by party registration holding vote choice and age constant. In this table, voting for Clinton and being female is the constant. What we see is that for “A great deal” and “A lot” of media attention, as those rates go down, voting for Trump increases. Put differently, paying less attention to news media makes one more likely to vote for Trump. These two variables are statistically significant. Additionally, being male and being older makes one more likely to vote for Trump. At the bottom of Table 1, paying “A moderate amount” of media attention with the interaction of age is shown to be significant, because this result includes all of the other variables in the model, it is likely that colinearity produced this result. 
+Finally looking only at the 2016 election, Table 1 shows a regression of media attention by party registration holding vote choice and age constant. In this table, voting for Clinton and being female is the constant. What we see is that for “A great deal” and “A lot” of media attention, as those rates go down, voting for Trump increases. Put differently, paying less attention to news media makes one more likely to vote for Trump. These two variables are statistically significant. Additionally, being male and being older makes one more likely to vote for Trump. At the bottom of Table 1, paying “A moderate amount” of media attention with the interaction of age is shown to be significant, because this result includes all of the other variables in the model, it is likely that collinearity produced this result. 
 
 # Conclusions
 
-Hence, what the data tells us is that media effects matter based on age and party affiliation. Young democrats pay more attention to the media to get their political news while older democrats play less attention to forms of media. Alternatively, young republicans pay little attention to the media for political news while older republicans pay a great deal more attention. Possible reasons for these results include the fact that the Democratic Party targets younger people with more progressive policies and is able to better mobilize influential groups and people to help campaign. We see this mobilization of young people through celebrity endorsement and campaign related text communication. Republicans on the other hand promote far more conservative policies that appeal to an older crowd. Specifically in 2016, young people not paying attention to politics in the media helped garner Trump support in the polls, as he was the subject of many controversies. Young people who got their news from older relatives or like-minded friends would not receive the same political information as those who watched the news or even read twitter. Therefore, this data confirms the bias and stereotypes of the different parties when gathering information to vote. While this result is plausible, more data on voting behavior is needed to correlate the results. Further the lack of specific behavior based questions by the ANES could result in skewed data. Given the fact the “not available” or no answer was a widely answered response in the surveys, it is possible that this impacted the results especially in the data on proportions. Finally, more data is needed to understand the impact of specific types of media on voters. 
+Hence, what the data tells us is that media effects matter based on age and party affiliation. Young democrats pay more attention to the media to get their political news while older democrats play less attention to forms of media. Alternatively, young republicans pay little attention to the media for political news while older republicans pay a great deal more attention. Possible reasons for these results include the fact that the Democratic Party targets younger people with more progressive policies and is able to better mobilize influential groups and people to help campaign. We see this mobilization of young people through celebrity endorsement and campaign related text communication. Republicans on the other hand promote far more conservative policies that appeal to an older crowd. Specifically in 2016, young people not paying attention to politics in the media helped garner Trump support in the polls, as he was the subject of many controversies. Young people who got their news from older relatives or like-minded friends would not receive the same political information as those who watched the news or even read twitter. Therefore, this data confirms the bias and stereotypes of the different parties when gathering information to vote. While this result is plausible, more data on voting behavior is needed to correlate the results. Further the lack of specific behavior based questions by the ANES could result in skewed data. Given the fact the “not available” or no answer was a widely answered response in the surveys, it is possible that this impacted the results especially in the data on proportions. With more time, a factor analysis would have been beneficial as well as using a multiple imputation model to impute the extensive missing values. Finally, more data is needed to understand the impact of specific types of media on voters. 
 
 Therefore, this project confirmed my hypothesis that media impact has increased since 2012 and of media effects, but only for the Democratic Party. My hypothesis that media would not affect one party more than the other is essentially disproved by this data, as results were different between the two parties. More research is needed on the Republican Party and how their information is gathered specifically among younger voters. Looking back on the constructivist model of media effects, it is possible that younger voters gather political information from interpersonal sources as opposed to the media, which results in their voting behavior. As campaigns and parties become more polarized and contested and the role of media in our lives grow, understanding how different variables like how the media impacts political behavior will be key to American politics. 
 
