@@ -55,8 +55,7 @@ After created subsets of each data set I recoded all the variables, in some case
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
-load("~/Desktop/soc513_spring_project/analysis/output/analytical_data.RData")
-source("~/Desktop/soc513_spring_project/useful_functions.R")
+load("../../analysis/output/analytical_data.RData")
 library(ggplot2)
 library(knitr)
 library(haven)
@@ -131,12 +130,16 @@ ggplot(cleaned_data2016, aes(x=media_att, y=..prop.., group=1))+
 
 My final bivariate analysis plots look at media attention by party affiliation. As shown above in Figures 1 and 2, voting Republican seems to increase over age and attention to politics using media also seems to increase by age. However, I also want to look at party affiliation and media interest. Do we see these same results by party and media attention, or are age, voting and media not as contingent on each other? Further, voting and media attention both have higher proportions in 2016 than in 2012, by exploring more variables, we can understand how much or how little of an impact the growing media has on voting. In 2012, Republicans paid greater attention to the media than did Democrats except in the categories of “A little” and “None”. This is interesting that Republicans would pay more attention gives that Obama won out in almost all ages. Furthermore, in 2016, Republicans have slightly higher rates of paying a great deal of attention, but Democrats pay more attention in the “A lot” and “A moderate amount” categories. Rates in 2016 are also much larger than rates in 2012 with each response gaining nearly 30% of responses compared to the 20% and under than answers received in 2012. What this could show is that the opposition party pays more attention to the news media than does the incumbent party. Further, in 2016, Democrats who were trying to mobilize a broad base, paid more attention than did homogenous Republicans. 
 
-```{r model_2012, echo=FALSE, message=FALSE, error=FALSE,fig.cap="Proportion of Media Attention by Candidate Choice across Age 2012"}
-
-
+```{r models, include=FALSE}
 modelx.full_2012<-multinom(vote~media_intINT*I(age-40)+gender, data=cleaned_data2012)
 
+model.full<-multinom(vote~media_att*(I(age-40))+gender, data=cleaned_data2016)
 
+model.full.media_att<-multinom(media_att~partyreg+vote+age, data=cleaned_data2016)
+
+```
+
+```{r model_2012, echo=FALSE, message=FALSE, error=FALSE,fig.cap="Proportion of Media Attention by Candidate Choice across Age 2012"}
 age <- 18:80
 fakedata_12 <- data.frame(media_intINT=rep(c("A little/None","A moderate amount","A lot","A great deal"), length(age)),
                        age=rep(age,each=4), gender=rep("Female",4*length(age)))
@@ -161,11 +164,6 @@ theme(legend.position="right")+
 ```
 
 ```{r model_2016, echo=FALSE, message=FALSE, error=FALSE, fig.cap="Proportion of Media Attention by Candidate Choice across Age 2016"}
-
-
-model.full<-multinom(vote~media_att*(I(age-40))+gender, data=cleaned_data2016)
-
-
 age <- 18:80
 fakedata <- data.frame(media_att=factor(rep(c("A little/None","A moderate amount","A lot","A great deal"), length(age)),
                                         levels=c("A little/None","A moderate amount","A lot","A great deal")),
@@ -189,13 +187,10 @@ ggplot(fake.results, aes(x=age, y=proportion, color=media_att, group=media_att))
 ```
 Figures 7 and 8 show the proportion of media attention by candidate choice across age with the interaction effect of age and controlling for gender. With the interaction effect, we get a slightly different graph than shown above. With younger voters having a high proportion of media attention when voting for Obama. The highest media attention and the lowest converge at around 70 years old and begin to drop off. For Romney voters however, young people have lower proportions with the highest and lowest media attention both around 30 years of age. As the age of Romney voters increases, so does attention to news media. Further, those who pay a great deal of attention and those who pay no attention are not as divergent as the rates for Obama supporters. This shows that in general Romney voters pay less attention to news media than do Obama voters. In 2016, Clinton supporters like the Obama supporters in 2012, are more engaged in news media at younger ages. In fact, news media attention decreases where it begins to converge around the age of 80; much older than that of Obama supporters. Trump, like Romney, has the opposite effect with the highest rate of media attention being “A little to none” at nearly 40% for young voters. While a little to none maintains being one of the highest rates across age, all media attention increases over age, converging around 70 years old. What this shows is that for Trump supporters is that being uninformed characterizes many young voters and again that voting for a Republican increases as one ages. Unlike Romney voters whose rates of any media attention were relatively low for young voters, Trump supports paid more attention to news media at all ages. This could be indicative of increasing availability of media as well as the amount of media sources that now cover politics. 
 
-```{r model_attempt, echo=FALSE, message=FALSE, error=FALSE, fig.cap="Table 1: Regression Model Predicting Voting by Attention Paid to the Media across Age 2016"}
-
-model.full<-multinom(media_att~partyreg+vote+age, data=cleaned_data2016)
-
-
-screenreg((model.full), 
-custom.coef.names=c("A great deal",
+```{r model_attempt, echo=FALSE, message=FALSE, error=FALSE, fig.cap="Table 1: Regression Model Predicting Voting by Attention Paid to the Media across Age 2016", results='asis'}
+texreg((model.full), 
+custom.coef.names=c("Intercept", "
+                    A great deal",
                     "A lot",
                     "A moderate amount", 
                     "Interaction (age-40)", 
@@ -203,7 +198,8 @@ custom.coef.names=c("A great deal",
                     "A great deal (age-40)", 
                     "A lot (age-40)", 
                     "A moderate amount (age-40)"), 
-caption="Regression Model Predicting Voting by Attention Paid to the Media across Age")
+caption="Regression Model Predicting Voting by Attention Paid to the Media across Age",
+caption.above=TRUE)
  
 ```
 
